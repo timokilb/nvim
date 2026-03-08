@@ -11,7 +11,7 @@ return {
 		vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 		vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 		    -- Open files in your nvim config
-		vim.keymap.set("n", "<leader>gd", builtin.lsp_definitions, { desc = "Telescope LSP definitions" })
+		vim.keymap.set("n", "<leader>fd", builtin.lsp_definitions, { desc = "Telescope LSP definitions" })
 		vim.keymap.set('n', '<leader>fc', function()
 			builtin.find_files({ cwd = vim.fn.stdpath('config') })
 		end, { desc = 'Telescope find files (nvim config)' })

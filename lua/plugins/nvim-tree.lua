@@ -3,7 +3,12 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     -- Basic setup
-    require("nvim-tree").setup()
+    require("nvim-tree").setup({
+        filters = {
+            git_ignored = false,
+            custom = { ".DS_Store" },
+        }
+    })
 
     -- Keymap to toggle
     vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle file tree" })

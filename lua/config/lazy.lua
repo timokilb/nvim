@@ -25,6 +25,29 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.equalalways = false
 
+vim.opt.expandtab = true   -- Use spaces instead of actual tab characters
+vim.opt.tabstop = 4        -- Display width of a tab character
+vim.opt.shiftwidth = 4     -- Number of spaces to use for autoindent
+vim.opt.softtabstop = 4    -- Number of spaces a <Tab> counts for while editing
+-- Force the .tf and .tfvars extensions to be recognized as 'terraform' filetype
+if vim.filetype then
+  vim.filetype.add({
+    extension = {
+      tf = 'terraform',
+      tfvars = 'terraform', -- good for tfvars files too
+    },
+  })
+end
+-- Terraform → 2 spaces
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "terraform" },
+  callback = function()
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.expandtab = true
+  end,
+})
+
 vim.opt.clipboard = "unnamedplus"
 
 require("keymaps")

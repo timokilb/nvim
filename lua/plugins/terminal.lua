@@ -15,28 +15,18 @@ return {
 
     -- Create one persistent terminal instance
     local Terminal = require("toggleterm.terminal").Terminal
-    local float_term = Terminal:new({
+    local terminal = Terminal:new({
       direction = "float",
       hidden = true,  -- don't list it when cycling through terminals
+      on_open = function(terminal)
+        vim.cmd("startinsert!")
+      end,
     })
 
     -- Keymap: toggle the same terminal instance
     vim.keymap.set("n", "<leader>tf", function()
-      float_term:toggle()
-    end, { desc = "Toggle floating terminal" })
+      terminal:toggle()
+    end, { desc = "Open Terminal" })
 
-    -- (Optional) add another keymap for horizontal or vertical split terminals
-    vim.keymap.set("n", "<leader>th", function()
-      float_term:toggle(20, "horizontal")
-    end, { desc = "Toggle horizontal terminal" })
-          -- Scratchpad
-    local scratch = Terminal:new({
-      cmd = "nvim ~/scratchpad.txt",
-      direction = "float",
-      hidden = true,
-      id = 13,
-        float_opts = { border = "curved" },
-    })
-    vim.keymap.set("n", "<leader>tx", function() scratch:toggle() end, { desc = "Floating scratchpad" })
-  end,
+  end
 }

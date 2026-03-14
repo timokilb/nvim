@@ -27,3 +27,7 @@ end, { desc = "Close current buffer (force)" })
 
 vim.keymap.set("n", "<leader>v", "<cmd>vsplit<cr>")
 
+--vim.keymap.set("n", "<leader>d", require("diffview").open())
+--vim.keymap.set("n", "<leader>d", function()
+--    require("diffview").open()
+--end, { desc = "git diff" })

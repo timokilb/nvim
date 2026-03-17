@@ -28,5 +28,8 @@ return {
       terminal:toggle()
     end, { desc = "Open Terminal" })
 
+    vim.keymap.set('t', '<Esc>', function()
+      terminal:toggle()
+    end, { desc = 'Exit terminal mode' })
   end
 }

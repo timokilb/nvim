@@ -5,9 +5,15 @@ return {
     -- Basic setup
     require("nvim-tree").setup({
         filters = {
+            dotfiles = false,
             git_ignored = false,
             custom = { ".DS_Store" },
-        }
+        },
+        actions = {
+            open_file = {
+                quit_on_open = true,  -- Automatically close tree after opening a file
+            },
+        },
     })
 
     -- Keymap to toggle

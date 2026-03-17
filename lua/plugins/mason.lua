@@ -1,45 +1,40 @@
--- lua/plugins/lsp.lua
 return {
-  -- Mason: tool installer
   {
     "williamboman/mason.nvim",
-    config = function()
+    configs = function()
       require("mason").setup()
     end,
   },
 
-  -- Mason-LSPConfig: makes mason + lspconfig play nice
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim" },
     configs = function()
       require("mason-lspconfig").setup {
-        ensure_installed = { "pyright" }, -- install Pyright for Python
+        ensure_installed = { "pyright" },
       }
     end,
   },
 
-  -- LSPConfig: actually configures the servers
   {
     "neovim/nvim-lspconfig",
+    version = "0.11.0",  -- future-proof
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
-      "iguanacucumber/magazine.nvim", -- completion (nvim-cmp fork)
-      "hrsh7th/cmp-nvim-lsp",         -- LSP completion source
-      "L3MON4D3/LuaSnip",             -- snippets (required by magazine)
+      "iguanacucumber/magazine.nvim",
+      "hrsh7th/cmp-nvim-lsp",
+      "L3MON4D3/LuaSnip",
     },
-    config = function()
-      local lspconfig = require("lspconfig")
-
-      -- Setup capabilities so LSP and magazine.nvim work together
+    configs = function()
+      local lspconfig = vim.lsp.config  -- new API
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      -- Python LSP setup
+      -- Python LSP
       lspconfig.pyright.setup {
         capabilities = capabilities,
       }
 
-      -- Magazine (completion) setup
+      -- Magazine / CMP setup
       local cmp = require("cmp")
       cmp.setup({
         snippet = {
@@ -61,4 +56,3 @@ return {
     end,
   },
 }
-

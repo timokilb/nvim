@@ -1,8 +1,15 @@
 # Neovim Config
 
+Neovim config created using [lazy.nvim](https://lazy.folke.io/) package manager.
+
 ## Install
 
-Clone this Repository and @ ~./config/
+> ***NOTE***
+I am currently testing nvim 0.12
+See [neovim.io](https://neovim.io/doc/install/) for installation
+
+Clone this repository @ ~/.config/
+
 
 ## TMUX
 

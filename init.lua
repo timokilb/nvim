@@ -157,7 +157,8 @@ vim.keymap.set("n", "<leader>fd", builtin.lsp_definitions, { desc = "Telescope L
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'auto',
+    -- https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md
+    theme = 'nord',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {
@@ -240,6 +241,10 @@ vim.lsp.enable({
     "ty", -- python
     "ts_ls", -- typescript
     "clangd" -- c
+})
+
+vim.diagnostic.config({
+  virtual_text = true,
 })
 --emergency button: delete caches
 --rm -rf ~/.local/share/nvim

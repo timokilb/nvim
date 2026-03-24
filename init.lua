@@ -35,6 +35,10 @@ vim.pack.add({
         src = "https://github.com/nvim-lua/plenary.nvim"
     },
     {
+        -- git in buffer
+        src = "https://www.github.com/lewis6991/gitsigns.nvim"
+    },
+    {
         -- oil for file exploration
         src = "https://github.com/stevearc/oil.nvim"
     },
@@ -43,8 +47,12 @@ vim.pack.add({
         src = "https://github.com/folke/which-key.nvim"
     },
     {
-        -- which key for keymap cheat sheets
-        src = "https://www.github.com/lewis6991/gitsigns.nvim"
+        -- make a fancy status bar
+        src = "https://github.com/nvim-lualine/lualine.nvim"
+    },
+    {
+        -- dev icons
+        src = "https://github.com/nvim-tree/nvim-web-devicons"
     }
 })
 
@@ -109,6 +117,8 @@ require("mason").setup({
 require("mason-lspconfig").setup()
 -- https://mason-registry.dev/registry/list or run :Mason
 -- https://github.com/mason-org/mason-registry/tree/main/packages
+-- copy from: https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/configs
+-- todo: add astrals ty
 require("mason-tool-installer").setup({
     ensure_installed = {
         -- Language Servers
@@ -116,6 +126,7 @@ require("mason-tool-installer").setup({
         "bashls", -- bash
         "rust_analyzer", -- rust
         "pyright", -- python
+        "ty", -- python
         "ts_ls", -- typescript
         "clangd" -- c
     },
@@ -143,6 +154,61 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' 
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 vim.keymap.set("n", "<leader>fd", builtin.lsp_definitions, { desc = "Telescope LSP definitions" })
 
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    always_show_tabline = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+      refresh_time = 16, -- ~60fps
+      events = {
+        'WinEnter',
+        'BufEnter',
+        'BufWritePost',
+        'SessionLoadPost',
+        'FileChangedShellPost',
+        'VimResized',
+        'Filetype',
+        'CursorMoved',
+        'CursorMovedI',
+        'ModeChanged',
+      },
+    }
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
+
 require("which-key").setup({})
 
 require("oil").setup()
@@ -161,6 +227,7 @@ vim.lsp.config("lua_ls", {})
 vim.lsp.config("bashls", {})
 vim.lsp.config("rust_analyzer", {})
 vim.lsp.config("pyright", {})
+vim.lsp.config("ty", {})
 vim.lsp.config("ts_ls", {})
 vim.lsp.config("clangd", {})
 
@@ -170,6 +237,7 @@ vim.lsp.enable({
     "bashls", -- bash
     "rust_analyzer", -- rust
     "pyright", -- python
+    "ty", -- python
     "ts_ls", -- typescript
     "clangd" -- c
 })

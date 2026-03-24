@@ -1,7 +1,5 @@
 # Neovim Config
 
-Neovim config created using [lazy.nvim](https://lazy.folke.io/) package manager.
-
 ## Install
 
 > ***NOTE***

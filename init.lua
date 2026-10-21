@@ -43,6 +43,10 @@ vim.pack.add({
         src = "https://github.com/stevearc/oil.nvim"
     },
     {
+        -- dap as a debugger
+        src="https://codeberg.org/mfussenegger/nvim-dap.git"
+    },
+    {
         -- which key for keymap cheat sheets
         src = "https://github.com/folke/which-key.nvim"
     },
@@ -125,7 +129,6 @@ require("mason-tool-installer").setup({
         "lua_ls", -- lua
         "bashls", -- bash
         "rust_analyzer", -- rust
-        "pyright", -- python
         "ty", -- python
         "ts_ls", -- typescript
         "clangd" -- c
@@ -145,14 +148,21 @@ require("nvim-treesitter").install({
     }
 })
 
-require("telescope").setup({})
+require("telescope").setup({
+    pickers = {
+        find_files = {
+            hidden = true
+        }
+    }
+})
 local builtin = require('telescope.builtin')
 
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
-vim.keymap.set("n", "<leader>fd", builtin.lsp_definitions, { desc = "Telescope LSP definitions" })
+vim.keymap.set('n', "<leader>fd", builtin.lsp_definitions, { desc = "Telescope LSP definitions" })
+vim.keymap.set('n', "<leader>gd", builtin.lsp_implementations, { desc = "Goto definition" })
 
 require('lualine').setup {
   options = {
@@ -242,7 +252,7 @@ require('gitsigns').setup {
   },
   auto_attach = true,
   attach_to_untracked = false,
-  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
   current_line_blame_opts = {
     virt_text = true,
     virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
@@ -276,20 +286,19 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
-vim.lsp.config("lua_ls", {})
-vim.lsp.config("bashls", {})
-vim.lsp.config("rust_analyzer", {})
-vim.lsp.config("pyright", {})
-vim.lsp.config("ty", {})
-vim.lsp.config("ts_ls", {})
-vim.lsp.config("clangd", {})
+-- Mason already handles the defaults
+-- vim.lsp.config("lua_ls", {})
+-- vim.lsp.config("bashls", {})
+-- vim.lsp.config("rust_analyzer", {})
+-- vim.lsp.config("ty", {})
+-- vim.lsp.config("ts_ls", {})
+-- vim.lsp.config("clangd", {})
 
 
 vim.lsp.enable({
     "lua_ls", -- lua
     "bashls", -- bash
     "rust_analyzer", -- rust
-    "pyright", -- python
     "ty", -- python
     "ts_ls", -- typescript
     "clangd" -- c
